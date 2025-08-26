@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import http from 'http';
 import { Server } from 'socket.io';
+import authRoutes from './routes/authRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -25,6 +26,8 @@ const io = new Server(server, {
 app.use(express.json());
 
 // Routes
+app.use('/api/auth', authRoutes);
+
 app.get('/', (req: Request, res: Response) => {
   res.send('ML-CHAT Server is running!');
 });
@@ -49,13 +52,17 @@ const connectDB = async () => {
   }
 };
 
-// Start server
-const startServer = async () => {
-  await connectDB();
+// Start server (only if this file is run directly)
+if (require.main === module) {
+  const startServer = async () => {
+    await connectDB();
+    
+    server.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  };
   
-  server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-};
+  startServer();
+}
 
-startServer();
+export default app;
