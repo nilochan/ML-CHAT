@@ -16,10 +16,12 @@ This project aims to create a chat application with a simple authentication syst
 
 ## Technologies
 
-- Backend: To be determined
-- Frontend: To be determined
-- Database: To be determined
-- Authentication: Custom password-based system
+- Backend: Express.js with Node.js
+- Frontend: React.js with TypeScript
+- Database: MongoDB
+- Authentication: JWT with bcrypt password hashing
+- Real-time Communication: Socket.IO
+- UI Library: Material-UI
 - Deployment: Railway
 
 ## Team
