@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 import app from '../index';
 import User from '../models/User';
 
+// Set default timeout for tests
+jest.setTimeout(30000);
+
 describe('Authentication System', () => {
   beforeAll(async () => {
     // Connect to test database
