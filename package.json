@@ -2,15 +2,15 @@
   "name": "ml-chat",
   "version": "1.0.0",
   "description": "A simple authentication chat system for Singapore and Malaysia users",
-  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nilochan/ML-CHAT.git"
+    "setup": "echo \"Setting up ML-CHAT development environment...\" && cd src/server && npm install && cd ../client && npm install && cd ../.. && echo \"Setup complete!\"",
+    "dev:server": "cd src/server && npm run dev",
+    "dev:client": "cd src/client && npm start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "test": "cd src/server && npm test",
+    "test:watch": "cd src/server && npm run test:watch",
+    "build": "cd src/server && npm run build && cd ../client && npm run build",
+    "docs": "echo \"Opening documentation...\" && start docs"
   },
   "keywords": [
     "chat",
@@ -20,10 +20,7 @@
   ],
   "author": "nilochan",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nilochan/ML-CHAT/issues"
-  },
-  "homepage": "https://github.com/nilochan/ML-CHAT#readme",
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
 }
