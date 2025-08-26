@@ -5,9 +5,11 @@ import Joi from 'joi';
 
 // Generate JWT Token
 const generateToken = (userId: string): string => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET || 'secret', {
-    expiresIn: process.env.JWT_EXPIRE || '7d'
-  });
+  return jwt.sign(
+    { userId }, 
+    process.env.JWT_SECRET || 'secret', 
+    { expiresIn: process.env.JWT_EXPIRE || '7d' }
+  );
 };
 
 // Register User
