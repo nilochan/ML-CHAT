@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Button, Typography, Paper, Alert } from '@mui/material';
+import { authAPI } from '../services/apiService';
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -33,15 +34,13 @@ const RegisterPage: React.FC = () => {
         return;
       }
 
-      // In a real app, this would be an API call to your backend
-      // For now, we'll simulate a successful registration
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Register user
+      await authAPI.register({ username, email, password });
       
       // Navigate to login
       navigate('/login');
-    } catch (err) {
-      setError('Registration failed. Please try again.');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

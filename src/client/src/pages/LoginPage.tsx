@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Button, Typography, Paper, Alert } from '@mui/material';
+import { authAPI } from '../services/apiService';
+import AuthContext from '../context/AuthContext';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +10,7 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,22 +18,16 @@ const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      // In a real app, this would be an API call to your backend
-      // For now, we'll simulate a successful login
-      if (email && password) {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Store token in localStorage (in real app)
-        // localStorage.setItem('token', 'fake-jwt-token');
-        
-        // Navigate to chat
-        navigate('/chat');
-      } else {
-        setError('Please fill in all fields');
-      }
-    } catch (err) {
-      setError('Invalid email or password');
+      const response = await authAPI.login({ email, password });
+      const { token, ...userData } = response.data;
+      
+      // Store user data and token in context
+      login(userData, token);
+      
+      // Navigate to chat
+      navigate('/chat');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Invalid email or password');
     } finally {
       setLoading(false);
     }
