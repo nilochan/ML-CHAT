@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import http from 'http';
 import { Server } from 'socket.io';
 import authRoutes from './routes/authRoutes';
+import chatRoutes from './routes/chatRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/chat', chatRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('ML-CHAT Server is running!');
@@ -35,6 +37,22 @@ app.get('/', (req: Request, res: Response) => {
 // Socket.IO connection handling
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
+  
+  // Handle chat messages
+  socket.on('sendMessage', (data) => {
+    // Broadcast message to all connected clients
+    io.emit('receiveMessage', data);
+  });
+  
+  // Handle typing indicator
+  socket.on('typing', (data) => {
+    socket.broadcast.emit('userTyping', data);
+  });
+  
+  // Handle stop typing indicator
+  socket.on('stopTyping', (data) => {
+    socket.broadcast.emit('userStopTyping', data);
+  });
   
   socket.on('disconnect', () => {
     console.log('A user disconnected:', socket.id);
@@ -66,3 +84,4 @@ if (require.main === module) {
 }
 
 export default app;
+export { io };
