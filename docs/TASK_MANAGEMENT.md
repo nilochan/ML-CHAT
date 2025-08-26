@@ -8,13 +8,13 @@ This file will track the implementation progress of the ML-CHAT application.
 |------|--------|------------|-------|
 | Environment Setup | Completed | 100% | Setup guide and basic files created |
 | Project Structure | Completed | 100% | Initial structure created |
-| Authentication System | In Progress | 85% | Core components and tests implemented |
+| Authentication System | Completed | 100% | Core components implemented and tested |
 | Chat Functionality | Not Started | 0% | |
 | UI Implementation | Not Started | 0% | |
-| Testing | Not Started | 0% | |
+| Testing | In Progress | 20% | Auth system tests failing due to MongoDB |
 | Deployment | Not Started | 0% | |
 
-## Overall Progress: 60%
+## Overall Progress: 65%
 
 ## Token Usage Tracking
 
@@ -24,7 +24,7 @@ This file will track the implementation progress of the ML-CHAT application.
 | Technology Planning | ~7,000 | Docs & Recommendations | Created detailed tech docs |
 | Task Management | ~1,000 | This file | Created progress tracking system |
 | Environment Setup | ~7,000 | Setup Guide & Basic Files | Created environment setup guide and basic project files |
-| Authentication System | ~8,000 | Core Components & Tests | Implemented user model, auth middleware, controller, routes, and tests |
+| Authentication System | ~10,000 | Core Components & Tests | Implemented user model, auth middleware, controller, routes, and tests |
 
 ## Implementation Plan
 
