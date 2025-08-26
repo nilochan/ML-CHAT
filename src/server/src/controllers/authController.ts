@@ -1,13 +1,18 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
-import Joi from 'joi';
+import * as Joi from 'joi';
+
+// Extend Express Request type to include user property
+interface AuthRequest extends Request {
+  user?: IUser;
+}
 
 // Generate JWT Token
 const generateToken = (userId: string): string => {
   const secret = process.env.JWT_SECRET || 'secret';
   const expiresIn = process.env.JWT_EXPIRE || '7d';
-  return jwt.sign({ userId }, secret, { expiresIn: expiresIn });
+  return jwt.sign({ userId }, secret, { expiresIn });
 };
 
 // Register User
@@ -110,7 +115,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 };
 
 // Get User Profile
-export const getProfile = async (req: Request, res: Response): Promise<Response> => {
+export const getProfile = async (req: AuthRequest, res: Response): Promise<Response> => {
   try {
     // req.user is added by auth middleware
     const user = req.user;
